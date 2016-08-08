@@ -1,0 +1,33 @@
+﻿<Window x:Class="TokenTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TokenTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="566.327" Width="529.082">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Top">
+            <TextBlock Text="Client Id:"/>
+            <TextBox  Name="txtClientId"/>
+            <TextBlock Text="Client secret:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtClientSecret"  />
+            <TextBlock Text="Audience:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtAudience"  Text="argipapi"/>
+            <TextBlock Text="Token endpoint:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtTokenEndpoint" />
+            <TextBlock Text="JWT response:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtJWT" Height="100" TextWrapping="Wrap" />
+            <TextBlock Text="Expires In:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtExpiresIn"  IsEnabled="False"/>
+            <TextBlock Text="Token type:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtTokenType"  IsEnabled="False"/>
+            <TextBlock Text="Error:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtError" Height="50" IsEnabled="False"  />
+            <Button x:Name="button" Content="Get Token" Width="100" HorizontalContentAlignment="Center" Click="button_Click" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+
+
+        </StackPanel>
+
+    </Grid>
+</Window>
