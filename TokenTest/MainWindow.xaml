@@ -5,21 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TokenTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="566.327" Width="529.082">
+        Title="MainWindow" Height="564.327" Width="529.082">
     <Grid Margin="20">
-        <StackPanel VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Top" Height="495">
             <TextBlock Text="Client Id:"/>
             <TextBox  Name="txtClientId"/>
             <TextBlock Text="Client secret:" Margin="0,10,0,0"/>
             <TextBox x:Name="txtClientSecret"  />
-            <TextBlock Text="Audience:" Margin="0,10,0,0"/>
-            <TextBox x:Name="txtAudience"  Text="argipapi"/>
             <TextBlock Text="Token endpoint:" Margin="0,10,0,0"/>
             <TextBox x:Name="txtTokenEndpoint" />
             <TextBlock Text="JWT response:" Margin="0,10,0,0"/>
             <TextBox x:Name="txtJWT" Height="100" TextWrapping="Wrap" />
             <TextBlock Text="Expires In:" Margin="0,10,0,0"/>
             <TextBox x:Name="txtExpiresIn"  IsEnabled="False"/>
+            <TextBlock Text="Not before:" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtNotBefore"  IsEnabled="False"/>
             <TextBlock Text="Token type:" Margin="0,10,0,0"/>
             <TextBox x:Name="txtTokenType"  IsEnabled="False"/>
             <TextBlock Text="Error:" Margin="0,10,0,0"/>

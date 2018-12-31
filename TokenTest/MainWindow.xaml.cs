@@ -1,22 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TokenTest
 {
@@ -39,7 +28,6 @@ namespace TokenTest
             txtTokenEndpoint.Text = mysettings.TokenEndpoint;
             txtClientId.Text = mysettings.ClientId;
             txtClientSecret.Text = mysettings.ClientSecret;
-            txtAudience.Text = mysettings.Audience;
         }
 
         //Decode Token, check payload data
@@ -67,17 +55,14 @@ namespace TokenTest
             string tokenendpoint = txtTokenEndpoint.Text;
             string client_id = txtClientId.Text;
             string client_secret = txtClientSecret.Text;
-            string audience = txtAudience.Text;
 
             
 
             if (string.IsNullOrEmpty(tokenendpoint)) throw new ArgumentNullException("TokenEndpoint");
             if (string.IsNullOrEmpty(client_id)) throw new ArgumentNullException("ClientId");
             if (string.IsNullOrEmpty(client_secret)) throw new ArgumentNullException("ClientSecret");
-            if (string.IsNullOrEmpty(audience)) throw new ArgumentNullException("Audience");
 
             //save data to store
-            mysettings.Audience = audience;
             mysettings.ClientId = client_id;
             mysettings.ClientSecret = client_secret;
             mysettings.TokenEndpoint = tokenendpoint;
@@ -92,14 +77,13 @@ namespace TokenTest
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            CancellationToken cancellationToken = default(CancellationToken);
+            var cancellationToken = default(CancellationToken);
 
             button.IsEnabled = false;
 
             var fields = new Dictionary<string, string>
             {
               { "grant_type", "client_credentials" },
-              { "audience", audience },
               { "client_id", client_id },
               { "client_secret", client_secret }
             };
@@ -109,8 +93,8 @@ namespace TokenTest
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                TokenResponse _response = JsonConvert.DeserializeObject<TokenResponse>(content);
-                TokenPayloadData _tokenpayloaddata =  DecodeJWT(_response.access_token);
+                var _response = JsonConvert.DeserializeObject<TokenResponse>(content);
+                var _tokenpayloaddata =  DecodeJWT(_response.access_token);
 
 
 
@@ -123,7 +107,10 @@ namespace TokenTest
 
                     if (_tokenpayloaddata != null)
                     {
-                            txtExpiresIn.Text = string.Format("{0} ({1} GMT)", _tokenpayloaddata.exp,  FromUnixTime(_tokenpayloaddata.exp).ToString());
+                        txtExpiresIn.Text =
+                            $"{_tokenpayloaddata.exp} ({FromUnixTime(_tokenpayloaddata.exp).ToString()} GMT)";
+                        txtNotBefore.Text =
+                            $"{_tokenpayloaddata.exp} ({FromUnixTime(_tokenpayloaddata.nbf).ToString()} GMT)";
                     }
                     else
                     {
@@ -138,7 +125,7 @@ namespace TokenTest
             else
             {
                 await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-                    txtError.Text = string.Format("Status code: {0}, reason: {1}", response.StatusCode, response.ReasonPhrase);
+                    txtError.Text = $"Status code: {response.StatusCode}, reason: {response.ReasonPhrase}";
                     button.IsEnabled = true;
                 }));
             }

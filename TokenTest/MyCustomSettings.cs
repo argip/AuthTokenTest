@@ -9,19 +9,6 @@ namespace TokenTest
 {
     public class MyCustomSettings : ApplicationSettingsBase
     {
-        [UserScopedSetting()]
-        [DefaultSettingValue("")]
-        public string Audience
-        {
-            get
-            {
-                return ((string)this["Audience"]);
-            }
-            set
-            {
-                this["Audience"] = value;
-            }
-        }
 
         [UserScopedSetting()]
         [DefaultSettingValue(@"https://argip.eu.auth0.com/oauth/token")]
