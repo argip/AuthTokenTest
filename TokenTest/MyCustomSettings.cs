@@ -11,7 +11,7 @@ namespace TokenTest
     {
 
         [UserScopedSetting()]
-        [DefaultSettingValue(@"https://argip.eu.auth0.com/oauth/token")]
+        [DefaultSettingValue(@"https://identityserver.argip.com.pl/connect/token")]
         public string TokenEndpoint
         {
             get
